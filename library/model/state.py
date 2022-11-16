@@ -176,7 +176,7 @@ class States:
         Command(Actions.SetAuthor, "установки автора книги"),
         Command(Actions.SetYear, "установки года издания книги"),
         Command(Actions.Execute, "выполнения команды"),
-        Command(Actions.Undo, "отмены"),
+        Command(Actions.Back, "отмены"),
     ])
 
     RemoveBook = RemoveBookState(f'Введите id книги для удаления.', [
