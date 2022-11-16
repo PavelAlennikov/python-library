@@ -114,9 +114,8 @@ celerybeat.pid
 # Environments
 .env
 .venv
-db_env/
 venv/
-db_env/
+env/
 env.bak/
 venv.bak/
 
