@@ -1,5 +1,8 @@
-from db.book import BookModel
-from model.book import Book
+import operator
+from functools import reduce
+
+from library.db.book import BookModel
+from library.model.book import Book
 from peewee import MySQLDatabase
 
 
@@ -68,6 +71,18 @@ class BookRep:
     def find_by_year(self, year):
         query = self.__library_model.select().where(BookModel.year == year)
         return self.__get_books(query)
+
+    def find(self, book: Book):
+        clauses = []
+
+        if book.year:
+            clauses.append(BookModel.year == book.year)
+        if book.author:
+            clauses.append(BookModel.author == book.author)
+        if book.title:
+            clauses.append(BookModel.title == book.title)
+
+        return self.__get_books(self.__library_model.select().where(reduce(operator.and_, clauses)))
 
     def count(self):
         return self.__library_model.select().count()

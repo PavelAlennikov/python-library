@@ -10,6 +10,17 @@ def clear():
     clear_console()
 
 
+def print_books(books):
+    book_list = ''
+    index = 1
+
+    for book in books:
+        book_list += f'{index} - {book}\n'
+        index += 1
+
+    print(book_list)
+
+
 def get_input():
     while True:
         user_input = input('Введите команду.\n')

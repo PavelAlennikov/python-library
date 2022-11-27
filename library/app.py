@@ -1,4 +1,4 @@
-from repository.library import BookRep
+from repository.book import BookRep
 import ui.ui as ui
 from model.state import StateManager, States
 
