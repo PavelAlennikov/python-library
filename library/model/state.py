@@ -64,6 +64,7 @@ class PrintAllState(StateWithStats):
     def handle_input(self, state_manager):
         books = state_manager.book_rep.get_all()
         ui.print_books(books)
+        ui.confirm_input()
         state_manager.change_state(States.Main)
 
 
@@ -79,6 +80,7 @@ class PrintState(State):
         except DoesNotExist:
             ui.draw_ui('Не удалось отобразить книгу. Книга с данным id не существует.')
 
+        ui.confirm_input()
         state_manager.change_state(MainState)
 
 
