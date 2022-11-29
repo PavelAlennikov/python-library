@@ -1,8 +1,8 @@
 import operator
 from functools import reduce
 
-from library.db.book import BookModel
-from library.model.book import Book
+from db.book import BookModel
+from model.book import Book
 from peewee import MySQLDatabase
 
 

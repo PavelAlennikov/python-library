@@ -2,12 +2,12 @@ from abc import ABC, abstractmethod
 
 from peewee import DoesNotExist
 
-from library.model.book import Book
-from library.repository.book import BookRep
-from library.ui import ui as ui
-from library.model.command import Command
-from library.model.actions import Actions
-from library.model.event import Event
+from model.book import Book
+from repository.book import BookRep
+from ui import ui as ui
+from model.command import Command
+from model.actions import Actions
+from model.event import Event
 
 
 class State(ABC):
@@ -82,7 +82,7 @@ class PrintState(State):
         state_manager.change_state(MainState)
 
 
-class ExitState(State):
+class ExitState(StateWithStats):
     def handle_input(self, state_manager):
         state_manager.stop_work()
 

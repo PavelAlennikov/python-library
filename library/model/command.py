@@ -1,4 +1,4 @@
-from library.model.actions import Actions
+from model.actions import Actions
 
 
 class Command:
