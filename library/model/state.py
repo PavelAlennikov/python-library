@@ -81,7 +81,7 @@ class PrintState(State):
             ui.draw_ui('Не удалось отобразить книгу. Книга с данным id не существует.')
 
         ui.confirm_input()
-        state_manager.change_state(MainState)
+        state_manager.change_state(States.Main)
 
 
 class ExitState(StateWithStats):
