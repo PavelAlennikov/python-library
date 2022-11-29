@@ -40,55 +40,6 @@ class StateWithStats(State):
         return super().to_string(state_manager) % state_manager.book_rep.count()
 
 
-class MainState(StateWithStats):
-    def handle_input(self, state_manager):
-        user_input = ui.get_input()
-        if user_input == Actions.Exit.value:
-            state_manager.change_state(States.Exit)
-        elif user_input == Actions.AddBook.value:
-            state_manager.change_state(States.AddBook)
-        elif user_input == Actions.RemoveBook.value:
-            state_manager.change_state(States.RemoveBook)
-        elif user_input == Actions.FindBook.value:
-            state_manager.change_state(States.FindBook)
-        elif user_input == Actions.PrintAt.value:
-            state_manager.change_state(States.Print)
-        elif user_input == Actions.PrintAll.value:
-            state_manager.change_state(States.PrintAll)
-        else:
-            ui.draw_ui('Ошибка ввода. Введите команду из списка.')
-            pass
-
-
-class PrintAllState(StateWithStats):
-    def handle_input(self, state_manager):
-        books = state_manager.book_rep.get_all()
-        ui.print_books(books)
-        ui.confirm_input()
-        state_manager.change_state(States.Main)
-
-
-class PrintState(State):
-    def handle_input(self, state_manager):
-        user_input = ui.get_input()
-
-        try:
-            book = state_manager.book_rep.get_at(int(user_input))
-            ui.draw_ui(f'Ваша книга - {book}\n')
-        except ValueError:
-            ui.draw_ui('Ошибка формата ввода. Введите число.')
-        except DoesNotExist:
-            ui.draw_ui('Не удалось отобразить книгу. Книга с данным id не существует.')
-
-        ui.confirm_input()
-        state_manager.change_state(States.Main)
-
-
-class ExitState(StateWithStats):
-    def handle_input(self, state_manager):
-        state_manager.stop_work()
-
-
 class ParameterizedState(State):
     def __init__(self, header: str, command_list):
         super().__init__(header, command_list)
@@ -150,6 +101,26 @@ class ParameterizedState(State):
         raise NotImplementedError
 
 
+class MainState(StateWithStats):
+    def handle_input(self, state_manager):
+        user_input = ui.get_input()
+        if user_input == Actions.Exit.value:
+            state_manager.change_state(States.Exit)
+        elif user_input == Actions.AddBook.value:
+            state_manager.change_state(States.AddBook)
+        elif user_input == Actions.RemoveBook.value:
+            state_manager.change_state(States.RemoveBook)
+        elif user_input == Actions.FindBook.value:
+            state_manager.change_state(States.FindBook)
+        elif user_input == Actions.PrintAt.value:
+            state_manager.change_state(States.Print)
+        elif user_input == Actions.PrintAll.value:
+            state_manager.change_state(States.PrintAll)
+        else:
+            ui.draw_ui('Ошибка ввода. Введите команду из списка.')
+            pass
+
+
 class AddBookState(ParameterizedState):
     def __init__(self, header: str, command_list):
         super().__init__(header, command_list)
@@ -189,6 +160,35 @@ class RemoveBookState(State):
                 ui.draw_ui('Ошибка формата ввода. Введите число.')
             except DoesNotExist:
                 ui.draw_ui('Не удалось удалить книгу. Книга с данным id не существует.')
+
+
+class PrintState(State):
+    def handle_input(self, state_manager):
+        user_input = ui.get_input()
+
+        try:
+            book = state_manager.book_rep.get_at(int(user_input))
+            ui.draw_ui(f'Ваша книга - {book}\n')
+        except ValueError:
+            ui.draw_ui('Ошибка формата ввода. Введите число.')
+        except DoesNotExist:
+            ui.draw_ui('Не удалось отобразить книгу. Книга с данным id не существует.')
+
+        ui.confirm_input()
+        state_manager.change_state(States.Main)
+
+
+class PrintAllState(StateWithStats):
+    def handle_input(self, state_manager):
+        books = state_manager.book_rep.get_all()
+        ui.print_books(books)
+        ui.confirm_input()
+        state_manager.change_state(States.Main)
+
+
+class ExitState(StateWithStats):
+    def handle_input(self, state_manager):
+        state_manager.stop_work()
 
 
 class StateManager:
