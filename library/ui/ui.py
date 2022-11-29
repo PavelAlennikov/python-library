@@ -31,6 +31,10 @@ def get_single_input():
     return input('Введите значение:\n')
 
 
+def confirm_input():
+    input("Нажмите Enter, чтобы продолжить...")
+
+
 def get_sting():
     user_input = None
     while True:

@@ -192,7 +192,7 @@ class RemoveBookState(State):
 class StateManager:
     def __init__(self, book_rep: BookRep):
         self.state_changed = Event()
-        self.__current_state = States.Main
+        self.__current_state = None
         self.book_rep = book_rep
         self.is_work = True
 
@@ -204,7 +204,10 @@ class StateManager:
         self.is_work = False
 
     def change_state(self, state: State):
-        self.__current_state = state
+        if state == self.current_state:
+            ui.confirm_input()
+        else:
+            self.__current_state = state
         ui.clear()
         string_state = self.__current_state.to_string(self)
         self.state_changed.invoke(string_state)
