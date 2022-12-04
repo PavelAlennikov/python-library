@@ -110,6 +110,8 @@ class MainState(StateWithStats):
             state_manager.change_state(States.AddBook)
         elif user_input == Actions.RemoveBook.value:
             state_manager.change_state(States.RemoveBook)
+        elif user_input == Actions.EditBook.value:
+            state_manager.change_state(States.EditBook)
         elif user_input == Actions.FindBook.value:
             state_manager.change_state(States.FindBook)
         elif user_input == Actions.PrintAt.value:
@@ -160,6 +162,22 @@ class RemoveBookState(State):
                 ui.draw_ui('Ошибка формата ввода. Введите число.')
             except DoesNotExist:
                 ui.draw_ui('Не удалось удалить книгу. Книга с данным id не существует.')
+
+
+class EditBookState(ParameterizedState):
+    def execute(self, state_manager):
+        book_id = ui.get_parameterized_input("Введите id книги для редактирования:")
+        try:
+            state_manager.book_rep.update_at(int(book_id), self.get_book())
+            ui.draw_ui(f'Книга с id = {book_id} отредактирована.\n'
+                       f'Новое состояние книги = ({state_manager.book_rep.get_at(book_id)})')
+            self.clear_book()
+        except ValueError:
+            ui.draw_ui('Ошибка формата ввода. Введите число.')
+        except DoesNotExist:
+            book = self.get_book()
+            ui.draw_ui('Не удалось удалить книгу. Книга с id не существует. Попробуйте ввести другой id.\n'
+                       f'Текушие параметры: title = {book.title}, year = {book.year}, author = {book.author}.')
 
 
 class PrintState(State):
@@ -220,6 +238,7 @@ class States:
         Command(Actions.Exit, 'выхода'),
         Command(Actions.AddBook, 'добавления книги'),
         Command(Actions.RemoveBook, 'удаления книги'),
+        Command(Actions.EditBook, 'редактирования книги'),
         Command(Actions.FindBook, 'поиска книги'),
         Command(Actions.PrintAt, 'вывода детальной информации о книге'),
         Command(Actions.PrintAll, 'вывода всех книг')
@@ -242,7 +261,15 @@ class States:
     ])
 
     RemoveBook = RemoveBookState('Введите id книги для удаления:', [
-        Command(Actions.Back, 'для выхода из меню добавления'),
+        Command(Actions.Back, 'выхода из меню добавления'),
+    ])
+
+    EditBook = EditBookState('Введите параметры книги для редактирования:', [
+        Command(Actions.SetTitle, 'установки название книги'),
+        Command(Actions.SetAuthor, 'установки автора книги'),
+        Command(Actions.SetYear, 'установки года издания книги'),
+        Command(Actions.Execute, 'выполнения команды'),
+        Command(Actions.Back, 'выхода из меню редактирования'),
     ])
 
     Print = PrintState('Введите id книги для отображения:', [

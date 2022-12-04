@@ -30,6 +30,9 @@ def get_input():
 def get_single_input():
     return input('Введите значение:\n')
 
+def get_parameterized_input(text: str):
+    return input(text + '\n')
+
 
 def confirm_input():
     input("Нажмите Enter, чтобы продолжить...")

@@ -46,9 +46,14 @@ class BookRep:
     def update_at(self, index, book: Book):
         instance: BookModel
         instance = self.__library_model.get_by_id(index)
-        instance.year = book.year  # type: ignore
-        instance.author = book.author  # type: ignore
-        instance.title = book.title  # type: ignore
+
+        if book.year:
+            instance.year = book.year  # type: ignore
+        if book.author:
+            instance.author = book.author  # type: ignore
+        if book.title:
+            instance.title = book.title  # type: ignore
+
         instance.save()
 
     def connect(self):
@@ -78,9 +83,9 @@ class BookRep:
         if book.year:
             clauses.append(BookModel.year == book.year)
         if book.author:
-            clauses.append(BookModel.author == book.author)
+            clauses.append(BookModel.author.contains(book.author))
         if book.title:
-            clauses.append(BookModel.title == book.title)
+            clauses.append(BookModel.title.contains(book.title))
 
         return self.__get_books(self.__library_model.select().where(reduce(operator.and_, clauses)))
 

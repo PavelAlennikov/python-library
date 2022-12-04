@@ -5,6 +5,7 @@ class Actions(Enum):
     Exit = "exit"
     AddBook = "add"
     RemoveBook = "remove"
+    EditBook = "edit"
     FindBook = "find"
     PrintAt = "print"
     PrintAll = "print all"
