@@ -15,6 +15,7 @@ class Actions(Enum):
     SetAuthor = "author"
     SetYear = "year"
     SetTitle = "title"
+    ClearParams = "clear"
 
     SetId = "id"
 

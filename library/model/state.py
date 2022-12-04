@@ -63,6 +63,9 @@ class ParameterizedState(State):
         elif user_input == Actions.Execute.value:
             self.execute(state_manager)
             state_manager.change_state(self)
+        elif user_input == Actions.ClearParams.value:
+            self.clear_book_with_output()
+            state_manager.change_state(self)
         elif user_input == Actions.Back.value:
             self.clear_book()
             state_manager.change_state(States.Main)
@@ -89,6 +92,10 @@ class ParameterizedState(State):
     @staticmethod
     def __success_update(param):
         ui.draw_ui(f'Параметр %s установлен.' % param)
+
+    def clear_book_with_output(self):
+        self.clear_book()
+        ui.draw_ui("Все параметры очищены.")
 
     def clear_book(self):
         self.__book = Book()
@@ -248,6 +255,7 @@ class States:
         Command(Actions.SetTitle, 'установки название книги'),
         Command(Actions.SetAuthor, 'установки автора книги'),
         Command(Actions.SetYear, 'установки года издания книги'),
+        Command(Actions.ClearParams, 'очистки параметров'),
         Command(Actions.Execute, 'выполнения команды'),
         Command(Actions.Back, 'выхода'),
     ])
@@ -256,6 +264,7 @@ class States:
         Command(Actions.SetTitle, 'установки название книги'),
         Command(Actions.SetAuthor, 'установки автора книги'),
         Command(Actions.SetYear, 'установки года издания книги'),
+        Command(Actions.ClearParams, 'очистки параметров'),
         Command(Actions.Execute, 'выполнения команды'),
         Command(Actions.Back, 'выхода'),
     ])
@@ -268,6 +277,7 @@ class States:
         Command(Actions.SetTitle, 'установки название книги'),
         Command(Actions.SetAuthor, 'установки автора книги'),
         Command(Actions.SetYear, 'установки года издания книги'),
+        Command(Actions.ClearParams, 'очистки параметров'),
         Command(Actions.Execute, 'выполнения команды'),
         Command(Actions.Back, 'выхода из меню редактирования'),
     ])
