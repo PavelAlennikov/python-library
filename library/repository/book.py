@@ -41,7 +41,7 @@ class BookRep:
         self.__library_model.get_by_id(index).delete_instance()
 
     def get_at(self, index: int):
-        return self.__get_book(self.__library_model.get_by_id(index))
+        return index, self.__get_book(self.__library_model.get_by_id(index))
 
     def update_at(self, index, book: Book):
         instance: BookModel
