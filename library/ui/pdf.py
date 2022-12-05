@@ -1,7 +1,7 @@
 from fpdf import FPDF
 from ui.book_formatter import BookFormatter
 
-from library.model.book import Book
+from model.book import Book
 
 
 class PdfPrinter:

@@ -1,6 +1,6 @@
 from repository.book import BookRep
 import ui.console as ui
-from library.service.state import StateManager, States
+from service.state import StateManager, States
 
 
 class App:

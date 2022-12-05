@@ -1,4 +1,4 @@
-from library.model.book import Book
+from model.book import Book
 
 
 class BookFormatter:
