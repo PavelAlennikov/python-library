@@ -4,10 +4,11 @@ from peewee import DoesNotExist
 
 from model.book import Book
 from repository.book import BookRep
-from ui import ui as ui
+from ui import console as ui
 from model.command import Command
 from model.actions import Actions
 from model.event import Event
+from ui.pdf import PdfPrinter
 
 
 class State(ABC):
@@ -193,7 +194,12 @@ class PrintState(State):
 
         try:
             book = state_manager.book_rep.get_at(int(user_input))
-            ui.draw_ui(f'Ваша книга - {book}\n')
+            if ui.is_pdf():
+                file_name = type(self).__name__ + '.pdf'
+                PdfPrinter.print_book(file_name, book)
+                ui.draw_ui(f'Результат в файле {file_name}')
+            else:
+                ui.print_book(book)
         except ValueError:
             ui.draw_ui('Ошибка формата ввода. Введите число.')
         except DoesNotExist:
@@ -206,7 +212,13 @@ class PrintState(State):
 class PrintAllState(StateWithStats):
     def handle_input(self, state_manager):
         books = state_manager.book_rep.get_all()
-        ui.print_books(books)
+
+        if ui.is_pdf():
+            file_name = type(self).__name__ + '.pdf'
+            PdfPrinter.print_books(file_name, books)
+            ui.draw_ui(f'Результат в файле {file_name}')
+        else:
+            ui.print_books(books)
         ui.confirm_input()
         state_manager.change_state(States.Main)
 

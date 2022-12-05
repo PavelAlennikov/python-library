@@ -1,4 +1,5 @@
 import os  # Импортируем библиотку для работы с ОС
+from ui.book_formatter import BookFormatter
 
 
 def draw_ui(strings_ui: str):
@@ -11,14 +12,22 @@ def clear():
 
 
 def print_books(books):
-    book_list = ''
-    index = 1
+    print(BookFormatter.format_books(books))
 
-    for book in books:
-        book_list += f'{index} - {book}\n'
-        index += 1
 
-    print(book_list)
+def print_book(book):
+    print(f'Ваша книга - {BookFormatter.format_book(book)}')
+
+
+def is_pdf():
+    while True:
+        result = input('Хотите получить вывод в pdf? (y/n)\n')
+        if result == 'y':
+            return True
+        elif result == 'n':
+            return False
+
+        print('Ошибка формата. Повторите ввод.')
 
 
 def get_input():
@@ -29,6 +38,7 @@ def get_input():
 
 def get_single_input():
     return input('Введите значение:\n')
+
 
 def get_parameterized_input(text: str):
     return input(text + '\n')
