@@ -6,11 +6,9 @@ class BookFormatter:
     @staticmethod
     def format_books(books):
         book_list = ''
-        index = 1
 
         for book in books:
             book_list += f'{BookFormatter.format_book(book)}\n'
-            index += 1
 
         return book_list
 
