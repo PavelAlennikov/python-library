@@ -16,4 +16,4 @@ class BookFormatter:
 
     @staticmethod
     def format_book(book: Book):
-        return f'id = {book[0]}, title = {book[1].title}, year = {book[1].year}, author = {book[1].author}'
+        return f'{book[0]}, {book[1].title}, {book[1].year}, {book[1].author}'
