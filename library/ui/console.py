@@ -16,7 +16,7 @@ def print_books(books):
 
 
 def print_book(book):
-    print(f'Ваша книга - {BookFormatter.format_book(book)}')
+    print(f'Ваша книга: {BookFormatter.format_book(book)}')
 
 
 def is_pdf():
